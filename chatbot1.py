@@ -8,9 +8,12 @@ openai.api_key = "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"
 start_sequence = "\nAI:"
 restart_sequence = "\nHuman: "
 
+# Initialize a list to store the conversation history
+previous_messages = []
+
 
 def chatbot(question):
-    # define the conversation context based on the input question
+    # define the conversation context based on the input question and the previous messages
     if "world series" in question:
         messages = [
             {"role": "system", "content": "You are a helpful assistant created by Barry."},
@@ -25,6 +28,8 @@ def chatbot(question):
             {"role": "system", "content": "You are a helpful assistant created by Barry."},
             {"role": "user", "content": question}
         ]
+    # append the previous messages to the conversation context
+    messages.extend(previous_messages)
 
     # generating the response based on the conversation context
     response = openai.ChatCompletion.create(
@@ -44,12 +49,13 @@ def chatbot(question):
 
 # Set up Streamlit app
 st.title("JRZY Chatbot")
+st.subheader("Talk to me and see how I feel")
 
 # Initialize session state for message history
 if "message_history" not in st.session_state:
     st.session_state.message_history = []
 
-placeholder = st.empty()  # a placeholder container to display the messages
+placeholder = st.sidebar.empty()  # a placeholder container to display the messages
 
 question = st.text_input("Ask me your questions:", "")
 
@@ -59,6 +65,10 @@ if st.button("Ask"):
     # append the user's question and the chatbot's response to the message history
     st.session_state.message_history.append(question)
     st.session_state.message_history.append(response)
+
+    # append the user's question and the chatbot's response to the previous messages list
+    previous_messages.append({"role": "user", "content": question})
+    previous_messages.append({"role": "assistant", "content": response})
 
     # display the message history using the placeholder container
     with placeholder.container():
