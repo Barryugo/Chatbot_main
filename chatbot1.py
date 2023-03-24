@@ -49,7 +49,7 @@ def chatbot(question):
 
 # Set up Streamlit app
 st.title("JRZY Chatbot")
-st.subheader("Talk to me and see how I feel")
+st.subheader("I'm ready to talk about sports. Are you?")
 
 # Initialize session state for message history
 if "message_history" not in st.session_state:
