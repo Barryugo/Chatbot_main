@@ -3,7 +3,8 @@ import streamlit as st
 from streamlit_chat import message
 
 # Make a request to the ChatCompletion API
-openai.api_key = "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"
+SECRET_KEY = os.environ.get("mykey")
+openai.api_key = SECRET_KEY
 
 start_sequence = "\nAI:"
 restart_sequence = "\nHuman: "
