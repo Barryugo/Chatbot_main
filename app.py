@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 # Making a request to the ChatCompletion API
-openai.api_key = "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"
+openai.api_key = "*******"
 
 start_sequence = "\nAI:"
 restart_sequence = "\nHuman: "
